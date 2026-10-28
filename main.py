@@ -24,7 +24,6 @@ if str(BASE_DIR) not in sys.path:
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
@@ -72,10 +71,13 @@ class ProfileUpdateRequest(BaseModel):
 # --- Web UI Routes ---
 @app.get("/", response_class=HTMLResponse)
 async def serve_home():
-    """Serves the interactive UI (checks root index.html first, then templates)."""
+    """Serves the interactive UI (checks public/index.html, root index.html, then templates)."""
+    public_html = BASE_DIR / "public" / "index.html"
     root_html = BASE_DIR / "index.html"
     template_html = TEMPLATE_DIR / "index.html"
-    if root_html.exists():
+    if public_html.exists():
+        return HTMLResponse(content=public_html.read_text(encoding="utf-8"))
+    elif root_html.exists():
         return HTMLResponse(content=root_html.read_text(encoding="utf-8"))
     elif template_html.exists():
         return HTMLResponse(content=template_html.read_text(encoding="utf-8"))
