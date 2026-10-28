@@ -3,8 +3,10 @@ Hackathon Configuration & Knowledge Constants
 Defines event details, rules, tracks, and runtime settings.
 """
 
+from __future__ import annotations
 import os
 from datetime import datetime
+from typing import List, Dict, Any
 
 class HackathonSettings:
     EVENT_NAME: str = "HackNova 2026"
@@ -17,14 +19,14 @@ class HackathonSettings:
     DISCORD_URL: str = "https://discord.gg/hacknova"
     SUBMISSION_PORTAL: str = "https://hacknova.devpost.com"
 
-    TRACKS: list[dict] = [
+    TRACKS: List[Dict[str, Any]] = [
         {"id": "ai_agents", "name": "Autonomous AI Agents", "lead_mentor": "Dr. Sarah Lin"},
         {"id": "fintech", "name": "Decentralized & Intelligent FinTech", "lead_mentor": "Alex Rivera"},
         {"id": "health", "name": "HealthTech & Bio-Informatics", "lead_mentor": "Priya Sharma"},
         {"id": "open_source", "name": "Open Innovation & Developer Tools", "lead_mentor": "Marcus Chen"},
     ]
 
-    JUDGING_CRITERIA: list[dict] = [
+    JUDGING_CRITERIA: List[Dict[str, Any]] = [
         {"criterion": "Innovation & Originality", "weight": "25%"},
         {"criterion": "Technical Complexity & Execution", "weight": "30%"},
         {"criterion": "User Experience & Design", "weight": "20%"},
@@ -32,7 +34,7 @@ class HackathonSettings:
         {"criterion": "Pitch & Presentation", "weight": "10%"},
     ]
 
-    SCHEDULE: list[dict] = [
+    SCHEDULE: List[Dict[str, Any]] = [
         {"time": "Day 1 - 09:00 AM", "event": "Check-in & Breakfast"},
         {"time": "Day 1 - 10:30 AM", "event": "Opening Ceremony & Problem Release"},
         {"time": "Day 1 - 11:30 AM", "event": "Hacking Begins 🚀"},

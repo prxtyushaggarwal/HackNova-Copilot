@@ -4,6 +4,7 @@ Implements robust entity recognition, structured response generation,
 and actionable payload formatting for real-time user interaction.
 """
 
+from __future__ import annotations
 import re
 from typing import Dict, Any, List, Optional
 from app.parser.action_schemas import ParsedBotResponse, ParsedAction

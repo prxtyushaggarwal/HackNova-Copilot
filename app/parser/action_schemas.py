@@ -3,6 +3,7 @@ Schemas for Parsed Responses and Action Triggers
 Used by the response parser to deliver structured payloads to frontend/clients.
 """
 
+from __future__ import annotations
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
 

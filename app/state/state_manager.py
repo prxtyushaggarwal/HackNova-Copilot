@@ -4,6 +4,7 @@ Maintains real-time conversational context, state machine transitions,
 and user-specific hackathon data across multi-turn interactions.
 """
 
+from __future__ import annotations
 from typing import Dict, Optional, Any, List
 from datetime import datetime
 import threading

@@ -3,6 +3,7 @@ State Models for Multi-Turn Hackathon Interaction
 Handles session context, dialogue state machine, user profile, and mentor requests.
 """
 
+from __future__ import annotations
 from enum import Enum
 from typing import Optional, List, Dict, Any
 from pydantic import BaseModel, Field

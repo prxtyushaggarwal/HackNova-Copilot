@@ -4,6 +4,7 @@ Provides rapid, offline-capable query retrieval for hackathon-specific questions
 with scoring, synonym expansion, and structured data lookups.
 """
 
+from __future__ import annotations
 from typing import Dict, Any, List, Optional, Tuple
 from app.config import settings
 

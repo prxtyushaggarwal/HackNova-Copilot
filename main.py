@@ -3,6 +3,7 @@ FastAPI Server & Real-Time Interaction Gateway
 Integrates WebSocket endpoints, REST API, state synchronization, and UI serving.
 """
 
+from __future__ import annotations
 import os
 import sys
 import json
