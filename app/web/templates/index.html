@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HackNova Copilot — Hackathon AI Assistant</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Left Sidebar: Session State & Quick Controls -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <div class="brand-title">HackNova Copilot</div>
+          <div class="brand-subtitle">Real-Time Event Assistant</div>
+        </div>
+      </div>
+
+      <!-- State: User Profile -->
+      <div class="card">
+        <div class="card-title">
+          <span>👤</span> Your Session Profile
+        </div>
+        <div class="profile-input-group">
+          <label>Team Name</label>
+          <input type="text" id="profileTeam" class="profile-input" placeholder="e.g. CodeWarriors">
+        </div>
+        <div class="profile-input-group">
+          <label>Table Number</label>
+          <input type="text" id="profileTable" class="profile-input" placeholder="e.g. 14">
+        </div>
+        <div class="profile-input-group">
+          <label>Track / Domain</label>
+          <input type="text" id="profileTrack" class="profile-input" placeholder="e.g. Autonomous AI Agents">
+        </div>
+      </div>
+
+      <!-- State: Active Mentor Tickets -->
+      <div class="card">
+        <div class="card-title">
+          <span>🎟️</span> Live Mentor Tickets
+        </div>
+        <div id="ticketsList">
+          <div style="font-size: 0.78rem; color: #64748b; font-style: italic;">No active tickets</div>
+        </div>
+      </div>
+
+      <!-- Core Topics Quick Access -->
+      <div class="card">
+        <div class="card-title">
+          <span>⚡</span> Quick Queries
+        </div>
+        <div class="quick-nav-list">
+          <button class="quick-nav-btn" onclick="window.client.sendMessage('What is the schedule and timeline?')">
+            <span>📅</span> Event Schedule
+          </button>
+          <button class="quick-nav-btn" onclick="window.client.sendMessage('What is the Wi-Fi password and venue map?')">
+            <span>📶</span> Wi-Fi & Venue
+          </button>
+          <button class="quick-nav-btn" onclick="window.client.sendMessage('What are the rules and judging criteria?')">
+            <span>⚖️</span> Rules & Rubric
+          </button>
+          <button class="quick-nav-btn" onclick="window.client.sendMessage('How do I submit my project to Devpost?')">
+            <span>🚀</span> Submission Checklist
+          </button>
+          <button class="quick-nav-btn" onclick="window.client.sendMessage('I need a mentor at my table')">
+            <span>🧑‍🏫</span> Call a Mentor
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Chat Workspace -->
+    <main class="chat-main">
+      <header class="chat-header">
+        <div class="header-status">
+          <div id="connectionDot" class="status-dot"></div>
+          <span id="connectionText" style="font-size: 0.85rem; font-weight: 500;">Connecting...</span>
+        </div>
+
+        <div class="countdown-box">
+          <span>⏳ Code Freeze:</span>
+          <span id="countdownTimer" class="timer">14:00:00</span>
+        </div>
+      </header>
+
+      <!-- Chat Messages Scroll Container -->
+      <section class="messages-container" id="messagesContainer">
+        <!-- Initial Bot Welcome -->
+        <div class="message-row assistant">
+          <div class="msg-avatar">⚡</div>
+          <div class="msg-body-wrapper">
+            <div class="msg-bubble">
+              <h3>👋 Welcome to <strong>HackNova 2026</strong>!</h3>
+              <p>I am your real-time <strong>AI-Powered Hackathon Copilot</strong>. I automate query handling across schedules, rules, technical questions, and on-demand mentor dispatches.</p>
+              <br>
+              <p>Type your query below or pick a quick topic to get started!</p>
+            </div>
+            <div class="msg-meta">
+              <span class="badge-intent">SYSTEM</span>
+              <span>Just now</span>
+            </div>
+            <div class="quick-replies">
+              <button class="quick-chip" onclick="window.client.sendMessage('View Schedule')">📅 View Schedule</button>
+              <button class="quick-chip" onclick="window.client.sendMessage('Wi-Fi Password')">📶 Wi-Fi Details</button>
+              <button class="quick-chip" onclick="window.client.sendMessage('Request a Mentor')">🧑‍🏫 Request Mentor</button>
+              <button class="quick-chip" onclick="window.client.sendMessage('Submission Rules')">⚖️ Submission Rules</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Input Bar -->
+      <footer class="chat-input-bar">
+        <div class="input-container">
+          <input 
+            type="text" 
+            id="chatInput" 
+            class="chat-input" 
+            placeholder="Ask anything (e.g., 'When is lunch?', 'I need a mentor at Table 4', 'Judging criteria')..." 
+            autocomplete="off"
+          />
+        </div>
+        <button id="sendBtn" class="send-btn" title="Send message">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </footer>
+    </main>
+
+  </div>
+
+  <script src="/static/js/chat.js"></script>
+</body>
+</html>
