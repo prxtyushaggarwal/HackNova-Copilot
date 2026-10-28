@@ -53,9 +53,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Static and template mounts
-app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
-templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
+# Static mounts (optional if directory exists)
+if STATIC_DIR.exists():
+    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 # Request Models
 class ChatRequest(BaseModel):
@@ -70,8 +70,15 @@ class ProfileUpdateRequest(BaseModel):
 
 # --- Web UI Routes ---
 @app.get("/", response_class=HTMLResponse)
-async def serve_home(request: Request):
-    return templates.TemplateResponse(request=request, name="index.html", context={"event": settings.EVENT_NAME})
+async def serve_home():
+    """Serves the interactive UI (checks root index.html first, then templates)."""
+    root_html = BASE_DIR / "index.html"
+    template_html = TEMPLATE_DIR / "index.html"
+    if root_html.exists():
+        return HTMLResponse(content=root_html.read_text(encoding="utf-8"))
+    elif template_html.exists():
+        return HTMLResponse(content=template_html.read_text(encoding="utf-8"))
+    return HTMLResponse("<h1>HackNova Copilot API is running.</h1>")
 
 # --- REST API Endpoints ---
 @app.post("/api/chat", response_model=ParsedBotResponse)
