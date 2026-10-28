@@ -83,20 +83,28 @@ async def serve_home():
         return HTMLResponse(content=template_html.read_text(encoding="utf-8"))
     return HTMLResponse("<h1>HackNova Copilot API is running.</h1>")
 
-# --- REST API Endpoints ---
+# --- REST API Endpoints (Supports both /api/* and root /* for Vercel rewrites) ---
+@app.get("/api/health")
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": "HackNova Copilot"}
+
 @app.post("/api/chat", response_model=ParsedBotResponse)
+@app.post("/chat", response_model=ParsedBotResponse)
 async def handle_chat_rest(req: ChatRequest):
     """Processes user queries via standard HTTP POST request."""
     response = bot_engine.process_query(session_id=req.session_id, user_message=req.message)
     return response
 
 @app.get("/api/state/{session_id}")
+@app.get("/state/{session_id}")
 async def get_session_state(session_id: str):
     """Returns the full conversational state, profile, and tickets for a session."""
     session = state_manager.get_or_create_session(session_id)
     return session.model_dump()
 
 @app.post("/api/profile")
+@app.post("/profile")
 async def update_profile(req: ProfileUpdateRequest):
     """Updates participant metadata (team, table, track)."""
     updated = state_manager.update_profile(
@@ -108,12 +116,14 @@ async def update_profile(req: ProfileUpdateRequest):
     return {"status": "ok", "profile": updated.model_dump()}
 
 @app.get("/api/tickets")
+@app.get("/tickets")
 async def list_all_tickets():
     """Organizer view: lists all active mentor tickets across tables."""
     tickets = state_manager.get_all_tickets()
     return {"count": len(tickets), "tickets": [t.model_dump() for t in tickets]}
 
 @app.post("/api/tickets/{ticket_id}/resolve")
+@app.post("/tickets/{ticket_id}/resolve")
 async def resolve_ticket(ticket_id: str):
     """Marks a mentor ticket as resolved."""
     success = state_manager.resolve_ticket(ticket_id)
