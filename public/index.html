@@ -709,7 +709,7 @@
           this.ws.send(JSON.stringify({ text: text }));
         } else {
           // REST API fallback
-          fetch("/api/chat", {
+          fetch("/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ session_id: this.sessionId, message: text })
@@ -823,7 +823,7 @@
         const table = document.getElementById("profileTable").value.trim();
         const track = document.getElementById("profileTrack").value.trim();
 
-        fetch("/api/profile", {
+        fetch("/profile", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -836,7 +836,7 @@
       }
 
       loadSessionState() {
-        fetch(`/api/state/${this.sessionId}`)
+        fetch(`/state/${this.sessionId}`)
           .then(res => res.json())
           .then(data => {
             if (data.user_profile) {
